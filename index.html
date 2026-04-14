@@ -124,6 +124,7 @@ to {opacity:1; transform:translateY(0);}
 
 <script>
 let userName="", userPhone="", selectedPackage="";
+let whatsappLink="";
 
 /* STEP 1 */
 function step1(){
@@ -175,18 +176,28 @@ setContent("<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya k
 setTimeout(finish,2500);
 }
 
-/* FINAL */
+/* FINAL STEP (BUTTON BADALA YA AUTO REDIRECT) */
 function finish(){
-setContent("<p style='color:green;'>✔ Imekamilika! Tunakuunganisha...</p>");
 
-setTimeout(function(){
 let message="MTEJA MPYA%0A"
 +"Jina: "+userName+"%0A"
 +"Namba: "+userPhone+"%0A"
 +"Kifurushi: "+selectedPackage;
 
-window.location.href="https://wa.me/255780467038?text="+message;
-},3000);
+whatsappLink="https://wa.me/255780467038?text="+message;
+
+setContent(`
+<p style='color:green;'>✔ Imekamilika! Huduma yako iko tayari</p>
+
+<p>Bonyeza hapa chini kupokea menu yako ya vifurushi</p>
+
+<button onclick="goWhatsApp()">POKEA MENU YAKO</button>
+`);
+}
+
+/* BUTTON ACTION */
+function goWhatsApp(){
+window.location.href=whatsappLink;
 }
 
 /* HELPER */
