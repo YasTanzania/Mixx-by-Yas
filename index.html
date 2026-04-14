@@ -1,64 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="sw">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mixx by Yas</title>
 
 <style>
-body{
-  margin:0;
-  font-family: Arial;
-}
-
-/* BACKGROUND IMAGE */
-.hero{
-  background: url('./poster.jpg') no-repeat center;
-  background-size: cover;
-  height: 100vh;
+body {margin:0;font-family:Arial;}
+.hero {
+  height:100vh;
+  background:url('poster.jpg') no-repeat center center/cover;
   display:flex;
   justify-content:center;
   align-items:center;
 }
-
-/* DARK OVERLAY */
-.overlay{
-  background: rgba(0,0,0,0.7);
-  padding:30px;
-  border-radius:15px;
+.overlay {
+  background:rgba(0,0,0,0.7);
+  padding:25px;
+  border-radius:12px;
   text-align:center;
-  width:300px;
+  color:white;
+  width:90%;
+  max-width:350px;
 }
-
-/* TEXT */
-h1{
-  color:#fff;
-  font-size:22px;
-}
-
-p{
-  color:#ccc;
-}
-
-/* INPUT */
-input{
+input, button {
   width:100%;
-  padding:10px;
-  margin:8px 0;
-  border:none;
-  border-radius:8px;
-}
-
-/* BUTTON */
-.btn{
-  background:yellow;
   padding:12px;
+  margin-top:10px;
   border-radius:8px;
-  color:black;
+  border:none;
+}
+button {
+  background:yellow;
   font-weight:bold;
+}
+.option {
+  background:#111;
+  margin-top:10px;
+  padding:10px;
+  border-radius:8px;
   cursor:pointer;
-  display:block;
-  text-decoration:none;
 }
 </style>
 </head>
@@ -66,16 +47,77 @@ input{
 <body>
 
 <div class="hero">
-  <div class="overlay">
-    <h1>75GB kwa Tsh 3,999</h1>
-    <p>Bila kikomo – Jiunge sasa!</p>
+  <div class="overlay" id="app">
 
-    <input type="text" placeholder="Jina lako">
-    <input type="number" placeholder="Namba yako">
+    <h1>Jiunge na Ofa</h1>
 
-    <a href="#" class="btn">JIUNGE SASA</a>
+    <input type="text" id="name" placeholder="Majina kamili">
+    <input type="number" id="phone" placeholder="Namba yako">
+
+    <button onclick="step1()">ENDELEA</button>
+
+    <p id="status"></p>
+
   </div>
 </div>
+
+<script>
+let userName = "";
+let userPhone = "";
+let selectedPackage = "";
+
+function step1(){
+  userName = document.getElementById("name").value;
+  userPhone = document.getElementById("phone").value;
+
+  if(userName=="" || userPhone==""){
+    document.getElementById("status").innerHTML="⚠️ Jaza taarifa zote";
+    return;
+  }
+
+  document.getElementById("app").innerHTML = "<p>⏳ Inachakata taarifa...</p>";
+
+  setTimeout(step2,2000);
+}
+
+function step2(){
+  document.getElementById("app").innerHTML = `
+  <h3>Chagua Kifurushi</h3>
+
+  <div class="option" onclick="selectPackage('75GB - 3570')">
+  1. 75GB kwa Tsh 3,570 BILA KIKOMO
+  </div>
+
+  <div class="option" onclick="selectPackage('100GB - 5999')">
+  2. 100GB kwa Tsh 5,999 BILA KIKOMO
+  </div>
+  `;
+}
+
+function selectPackage(pkg){
+  selectedPackage = pkg;
+
+  document.getElementById("app").innerHTML = "<p>⏳ Inachakata chaguo lako...</p>";
+
+  setTimeout(step3,2000);
+}
+
+function step3(){
+  document.getElementById("app").innerHTML = `
+  <p>🔐 Thibitisha namba yako kuendelea</p>
+  <button onclick="finish()">THIBITISHA</button>
+  `;
+}
+
+function finish(){
+  let message = "Mteja Mpya%0A"
+  + "Jina: " + userName + "%0A"
+  + "Namba: " + userPhone + "%0A"
+  + "Kifurushi: " + selectedPackage;
+
+  window.location.href = "https://wa.me/255712345678?text=" + message;
+}
+</script>
 
 </body>
 </html>
