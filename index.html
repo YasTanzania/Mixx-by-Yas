@@ -1,46 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="sw">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mixx by Yas</title>
 
 <style>
-body{
-    margin:0;
-    font-family:Arial;
+body {
+    margin: 0;
+    font-family: Arial;
 }
 
-.hero{
-    background:url('poster.jpg') no-repeat center;
-    background-size:cover;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+.hero {
+    height: 100vh;
+    background: url('poster.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.overlay{
-    background:rgba(0,0,0,0.6);
-    padding:30px;
-    border-radius:15px;
-    color:white;
-    text-align:center;
+.overlay {
+    background: rgba(0,0,0,0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
 }
 
-h1{
-    color:yellow;
-    font-size:35px;
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
 }
 
-.btn{
-    background:#0066ff;
-    padding:15px 25px;
-    border-radius:10px;
-    color:white;
-    text-decoration:none;
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    background: yellow;
+    border: none;
+    font-weight: bold;
+    border-radius: 8px;
 }
 </style>
+
 </head>
 
 <body>
@@ -48,11 +53,25 @@ h1{
 <div class="hero">
     <div class="overlay">
         <h1>75GB kwa Tsh 3,999</h1>
-        <p>Bila kikomo • Kasi ya 4G/5G</p>
-        <a href="#" class="btn">JIUNGE SASA</a>
-        <p>Piga *147*00#</p>
+        <p>Bila kikomo – Jiunge sasa!</p>
+
+        <input type="text" id="name" placeholder="Jina lako">
+        <input type="tel" id="phone" placeholder="Namba yako">
+
+        <button onclick="sendData()">JIUNGE SASA</button>
     </div>
 </div>
+
+<script>
+function sendData() {
+    var name = document.getElementById("name").value;
+    var phone = document.getElementById("phone").value;
+
+    var message = "Nataka kujiunga na ofa ya 75GB.%0AJina: " + name + "%0ANamba: " + phone;
+
+    window.open("https://wa.me/255780467038?text=" + message);
+}
+</script>
 
 </body>
 </html>
