@@ -1,77 +1,81 @@
 <!DOCTYPE html>
-<html lang="sw">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mixx by Yas</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
+body{
+  margin:0;
+  font-family: Arial;
 }
 
-.hero {
-    height: 100vh;
-    background: url('poster.jpg') no-repeat center center/cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* BACKGROUND IMAGE */
+.hero{
+  background: url('poster.jpg') no-repeat center;
+  background-size: cover;
+  height: 100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.overlay {
-    background: rgba(0,0,0,0.7);
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    color: white;
+/* DARK OVERLAY */
+.overlay{
+  background: rgba(0,0,0,0.7);
+  padding:30px;
+  border-radius:15px;
+  text-align:center;
+  width:300px;
 }
 
-input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 8px;
-    border: none;
+/* TEXT */
+h1{
+  color:#fff;
+  font-size:22px;
 }
 
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    background: yellow;
-    border: none;
-    font-weight: bold;
-    border-radius: 8px;
+p{
+  color:#ccc;
+}
+
+/* INPUT */
+input{
+  width:100%;
+  padding:10px;
+  margin:8px 0;
+  border:none;
+  border-radius:8px;
+}
+
+/* BUTTON */
+.btn{
+  background:yellow;
+  padding:12px;
+  border-radius:8px;
+  color:black;
+  font-weight:bold;
+  cursor:pointer;
+  display:block;
+  text-decoration:none;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="hero">
-    <div class="overlay">
-        <h1>75GB kwa Tsh 3,999</h1>
-        <p>Bila kikomo – Jiunge sasa!</p>
+  <div class="overlay">
+    <h1>75GB kwa Tsh 3,999</h1>
+    <p>Bila kikomo – Jiunge sasa!</p>
 
-        <input type="text" id="name" placeholder="Jina lako">
-        <input type="tel" id="phone" placeholder="Namba yako">
+    <input type="text" placeholder="Jina lako">
+    <input type="number" placeholder="Namba yako">
 
-        <button onclick="sendData()">JIUNGE SASA</button>
-    </div>
+    <a href="#" class="btn">JIUNGE SASA</a>
+  </div>
 </div>
-
-<script>
-function sendData() {
-    var name = document.getElementById("name").value;
-    var phone = document.getElementById("phone").value;
-
-    var message = "Nataka kujiunga na ofa ya 75GB.%0AJina: " + name + "%0ANamba: " + phone;
-
-    window.open("https://wa.me/255780467038?text=" + message);
-}
-</script>
 
 </body>
 </html>
