@@ -3,37 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fiber Smart System</title>
+<title>Fiber System</title>
 
 <style>
-body {
+body{
 margin:0;
 font-family:Arial;
 background:#f5f5f5;
-}
-
-/* CENTER */
-.container {
-height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+height:100vh;
 }
 
-/* BOX */
-.box {
+.box{
 background:yellow;
 color:blue;
 padding:25px;
 border-radius:12px;
 width:90%;
-max-width:360px;
+max-width:350px;
 text-align:center;
-animation:fade 0.5s;
 }
 
-/* INPUT */
-input {
+input{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -41,8 +34,7 @@ border-radius:8px;
 border:none;
 }
 
-/* BUTTON */
-button {
+button{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -54,163 +46,153 @@ font-weight:bold;
 cursor:pointer;
 }
 
-/* OPTIONS */
-.option {
+.option{
 background:#111;
 color:white;
-margin-top:10px;
 padding:12px;
+margin-top:10px;
 border-radius:8px;
 cursor:pointer;
 }
-
-/* ANIMATION */
-@keyframes fade {
-from {opacity:0; transform:translateY(20px);}
-to {opacity:1; transform:translateY(0);}
-}
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
-<div class="box" id="app">
-
-<h3>Huduma ya Fiber</h3>
-
-<input type="text" id="name" placeholder="Majina kamili">
-
-<button onclick="step1()">ENDELEA</button>
-
-<p id="msg"></p>
-
-</div>
-</div>
+<div class="box" id="app"></div>
 
 <script>
 
-/* VARIABLES */
 let name="", phone="", location="", huduma="";
 
-/* HELPER */
-function setContent(c){
-document.getElementById("app").innerHTML = c;
+/* LOAD FIRST SCREEN */
+start();
+
+function start(){
+document.getElementById("app").innerHTML=`
+<h3>Huduma ya Fiber</h3>
+<input id="name" placeholder="Majina kamili">
+<button id="next1">ENDELEA</button>
+<p id="msg"></p>
+`;
+
+document.getElementById("next1").addEventListener("click", step1);
 }
 
-/* STEP 1 - NAME */
+/* STEP 1 */
 function step1(){
+let input=document.getElementById("name");
 
-let input = document.getElementById("name");
-
-if(!input){
-alert("Error imejitokeza");
+if(!input.value.trim()){
+document.getElementById("msg").innerHTML="⚠️ Weka majina";
 return;
 }
 
-name = input.value.trim();
-
-if(name === ""){
-document.getElementById("msg").innerHTML="⚠️ Weka majina kamili";
-return;
-}
+name=input.value;
 
 setContent("⏳ Inachakata taarifa...");
 setTimeout(step2,1500);
 }
 
-/* STEP 2 - PHONE */
+/* STEP 2 */
 function step2(){
 setContent(`
 <h3>Weka Namba</h3>
-<input type="number" id="phone" placeholder="Namba yako ya Fiber/YAS">
-<button onclick="step3()">ENDELEA</button>
+<input id="phone" placeholder="Namba yako">
+<button id="next2">ENDELEA</button>
 `);
+
+document.getElementById("next2").addEventListener("click", step3);
 }
 
 /* STEP 3 */
 function step3(){
+let input=document.getElementById("phone");
 
-let input = document.getElementById("phone");
-phone = input.value.trim();
-
-if(phone === ""){
-alert("⚠️ Weka namba yako");
+if(!input.value.trim()){
+alert("Weka namba");
 return;
 }
+
+phone=input.value;
 
 setContent("⏳ Inachakata namba...");
 setTimeout(step4,1500);
 }
 
-/* STEP 4 - LOCATION */
+/* STEP 4 */
 function step4(){
 setContent(`
 <h3>Eneo lako</h3>
-<input type="text" id="location" placeholder="Mfano: Dar, Arusha">
-<button onclick="step5()">ENDELEA</button>
+<input id="location" placeholder="Mfano: Dar">
+<button id="next3">ENDELEA</button>
 `);
+
+document.getElementById("next3").addEventListener("click", step5);
 }
 
 /* STEP 5 */
 function step5(){
+let input=document.getElementById("location");
 
-let input = document.getElementById("location");
-location = input.value.trim();
-
-if(location === ""){
-alert("⚠️ Weka eneo lako");
+if(!input.value.trim()){
+alert("Weka eneo");
 return;
 }
 
-setContent("⏳ Inatafuta huduma eneo lako...");
+location=input.value;
+
+setContent("⏳ Inatafuta huduma...");
 setTimeout(step6,1500);
 }
 
-/* STEP 6 - CHOICE */
+/* STEP 6 */
 function step6(){
 setContent(`
 <h3>Chagua Huduma</h3>
 
-<div class="option" onclick="selectOption('Nahitaji Fiber')">
-📡 Nahitaji Fiber yangu
-</div>
-
-<div class="option" onclick="selectOption('Nina tatizo')">
-⚠️ Nina tatizo la huduma
-</div>
+<div class="option" id="fiber">📡 Nahitaji Fiber</div>
+<div class="option" id="tatizo">⚠️ Nina tatizo</div>
 `);
+
+document.getElementById("fiber").addEventListener("click", ()=>select("Nahitaji Fiber"));
+document.getElementById("tatizo").addEventListener("click", ()=>select("Nina tatizo"));
 }
 
 /* STEP 7 */
-function selectOption(choice){
-huduma = choice;
+function select(choice){
+huduma=choice;
 
-setContent("⏳ Inakuunganisha na mfumo...");
+setContent("⏳ Inakuunganisha...");
 setTimeout(finish,1500);
 }
 
 /* FINAL */
 function finish(){
 
-let msg =
+let msg=
 "MTEJA MPYA%0A"+
 "Jina: "+name+"%0A"+
 "Namba: "+phone+"%0A"+
 "Eneo: "+location+"%0A"+
 "Mahitaji: "+huduma;
 
-let link = "https://wa.me/255780467038?text="+msg; // BADILISHA NAMBA
+let link="https://wa.me/255712345678?text="+msg;
 
 setContent(`
 <h3 style="color:green;">✔ Imekamilika</h3>
-<p>Endelea kupata huduma yako</p>
-
-<button onclick="window.location.href='${link}'">
-POKEA MENU YAKO
-</button>
+<p>Bonyeza kuendelea</p>
+<button id="wa">POKEA MENU YAKO</button>
 `);
+
+document.getElementById("wa").addEventListener("click", ()=>{
+window.location.href=link;
+});
+}
+
+/* HELPER */
+function setContent(c){
+document.getElementById("app").innerHTML=c;
 }
 
 </script>
