@@ -3,52 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mixx Ofa</title>
+<title>Fiber Mixx System</title>
 
 <style>
-body {margin:0;font-family:Arial;}
+body {margin:0;font-family:Arial;background:#f5f5f5;}
 
-/* TOP BAR */
-#liveUsers {
-background:black;
-color:yellow;
-text-align:center;
-padding:10px;
-font-size:14px;
-}
-
-/* HERO */
-.hero {
+.container {
 height:100vh;
-background:url('poster.jpg') no-repeat center center/cover;
 display:flex;
 justify-content:center;
 align-items:center;
 }
 
-/* BOX */
-.overlay {
+.box {
 background:yellow;
 color:blue;
 padding:25px;
 border-radius:12px;
-text-align:center;
 width:90%;
 max-width:350px;
-animation:float 3s ease-in-out infinite;
+text-align:center;
+animation:fade 0.6s;
 }
 
-/* FLOAT */
-@keyframes float {
-0% {transform: translateY(0px);}
-50% {transform: translateY(-10px);}
-100% {transform: translateY(0px);}
-}
-
-/* TEXT */
-h1,h2,h3,p {color:blue;}
-
-/* INPUT */
 input {
 width:100%;
 padding:12px;
@@ -57,44 +34,28 @@ border-radius:8px;
 border:none;
 }
 
-/* BUTTON */
 button {
 width:100%;
 padding:12px;
 margin-top:10px;
-border-radius:8px;
 border:none;
+border-radius:8px;
 background:blue;
 color:white;
 font-weight:bold;
 cursor:pointer;
-animation:pulse 1.5s infinite;
 }
 
-button:hover {background:#0033cc;}
-
-@keyframes pulse {
-0% {transform: scale(1);}
-50% {transform: scale(1.05);}
-100% {transform: scale(1);}
-}
-
-/* OPTIONS */
 .option {
 background:#111;
 color:white;
 margin-top:10px;
-padding:10px;
+padding:12px;
 border-radius:8px;
 cursor:pointer;
 }
 
-/* FADE */
-.fade {
-animation:fadeIn 0.8s ease-in-out;
-}
-
-@keyframes fadeIn {
+@keyframes fade {
 from {opacity:0; transform:translateY(20px);}
 to {opacity:1; transform:translateY(0);}
 }
@@ -103,134 +64,127 @@ to {opacity:1; transform:translateY(0);}
 
 <body>
 
-<div id="liveUsers">🔥 Watu 17 wanaendelea sasa hivi</div>
+<div class="container">
+<div class="box" id="app">
 
-<div class="hero">
-<div class="overlay" id="app">
-
-<h2>Huduma ya Haraka ya Mixx</h2>
-
-<p id="timer">⏳ Ofa inaisha ndani ya 17:00</p>
+<h3>Huduma ya Fiber</h3>
 
 <input type="text" id="name" placeholder="Majina kamili">
-<input type="number" id="phone" placeholder="Namba yako">
+<button onclick="step1()">ENDELEA</button>
 
-<button onclick="step1(); vibrate();">ENDELEA</button>
-
-<p id="status"></p>
+<p id="msg"></p>
 
 </div>
 </div>
 
 <script>
-let userName="", userPhone="", selectedPackage="";
-let whatsappLink="";
+let name="", phone="", location="", huduma="";
 
-/* STEP 1 */
+/* STEP 1 - NAME */
 function step1(){
-userName=document.getElementById("name").value;
-userPhone=document.getElementById("phone").value;
+name=document.getElementById("name").value;
 
-if(userName==""||userPhone==""){
-document.getElementById("status").innerHTML="⚠️ Jaza taarifa zote";
+if(name==""){
+document.getElementById("msg").innerHTML="⚠️ Weka majina";
 return;
 }
 
-setContent("<p>⏳ Inachakata taarifa zako<span id='dots'></span></p>");
-setTimeout(step2,2000);
+setContent("⏳ Inachakata taarifa...");
+setTimeout(step2,1500);
 }
 
-/* STEP 2 */
+/* STEP 2 - PHONE */
 function step2(){
 setContent(`
-<h3>Chagua Kifurushi</h3>
-
-<div class="option" onclick="selectPackage('75GB - 3570'); vibrate();">
-75GB kwa Tsh 3,570 BILA KIKOMO
-</div>
-
-<div class="option" onclick="selectPackage('100GB - 5999'); vibrate();">
-100GB kwa Tsh 5,999 BILA KIKOMO
-</div>
+<h3>Weka Namba</h3>
+<input type="number" id="phone" placeholder="Namba yako ya Fiber/YAS">
+<button onclick="step3()">ENDELEA</button>
 `);
 }
 
 /* STEP 3 */
-function selectPackage(pkg){
-selectedPackage=pkg;
-setContent("<p>⏳ Inachakata chaguo lako<span id='dots'></span></p>");
-setTimeout(step3,2000);
+function step3(){
+phone=document.getElementById("phone").value;
+
+if(phone==""){
+alert("Weka namba");
+return;
 }
 
-/* STEP 4 */
-function step3(){
+setContent("⏳ Inachakata namba...");
+setTimeout(step4,1500);
+}
+
+/* STEP 4 - LOCATION */
+function step4(){
 setContent(`
-<p>🔐 Thibitisha ili kuendelea</p>
-<button onclick="step4()">THIBITISHA</button>
+<h3>Eneo lako</h3>
+<input type="text" id="location" placeholder="Mfano: Dar, Arusha">
+<button onclick="step5()">ENDELEA</button>
 `);
 }
 
 /* STEP 5 */
-function step4(){
-setContent("<p>📩 Endelea ili uweze kupokea Msimbo wa uthibitisho na menu ya kupokea vifurushi...</p>");
-setTimeout(finish,2500);
+function step5(){
+location=document.getElementById("location").value;
+
+if(location==""){
+alert("Weka eneo");
+return;
 }
 
-/* FINAL STEP (BUTTON BADALA YA AUTO REDIRECT) */
-function finish(){
+setContent("⏳ Inatafuta huduma eneo lako...");
+setTimeout(step6,1500);
+}
 
-let message="MTEJA MPYA%0A"
-+"Jina: "+userName+"%0A"
-+"Namba: "+userPhone+"%0A"
-+"Kifurushi: "+selectedPackage;
-
-whatsappLink="https://wa.me/255780467038?text="+message;
-
+/* STEP 6 - CHOICE */
+function step6(){
 setContent(`
-<p style='color:green;'>✔ Imekamilika! Huduma yako iko tayari</p>
+<h3>Chagua Huduma</h3>
 
-<p>Bonyeza hapa chini kupokea menu yako ya vifurushi</p>
+<div class="option" onclick="select('Nahitaji Fiber')">
+📡 Nahitaji Fiber yangu
+</div>
 
-<button onclick="goWhatsApp()">POKEA MENU YAKO</button>
+<div class="option" onclick="select('Nina tatizo')">
+⚠️ Nina tatizo la huduma
+</div>
 `);
 }
 
-/* BUTTON ACTION */
-function goWhatsApp(){
-window.location.href=whatsappLink;
+/* STEP 7 */
+function select(choice){
+huduma=choice;
+
+setContent("⏳ Inakuunganisha na mfumo...");
+setTimeout(finish,1500);
+}
+
+/* FINAL */
+function finish(){
+
+let message=
+"MTEJA MPYA%0A"+
+"Jina: "+name+"%0A"+
+"Namba: "+phone+"%0A"+
+"Eneo: "+location+"%0A"+
+"Mahitaji: "+huduma;
+
+let link="https://wa.me/255712345678?text="+message;
+
+setContent(`
+<p style="color:green;">✔ Mfumo uko tayari</p>
+<p>Bonyeza hapa kupata huduma yako</p>
+
+<button onclick="window.location.href='${link}'">
+POKEA HUDUMA SASA
+</button>
+`);
 }
 
 /* HELPER */
-function setContent(content){
-document.getElementById("app").innerHTML="<div class='fade'>"+content+"</div>";
-}
-
-/* TIMER 17 MIN */
-let time=1020;
-setInterval(function(){
-let m=Math.floor(time/60);
-let s=time%60;
-document.getElementById("timer").innerHTML=
-"⏳ Ofa inaisha ndani ya "+m+":"+(s<10?"0":"")+s;
-if(time>0){time--;}
-},1000);
-
-/* FAKE USERS */
-setInterval(function(){
-let num=Math.floor(Math.random()*30)+10;
-document.getElementById("liveUsers").innerHTML=
-"🔥 Watu "+num+" wanaendelea sasa hivi";
-},4000);
-
-/* DOTS */
-setInterval(function(){
-let d=document.getElementById("dots");
-if(d){d.innerHTML=d.innerHTML.length>3?"":d.innerHTML+".";}
-},500);
-
-/* VIBRATION */
-function vibrate(){
-if(navigator.vibrate){navigator.vibrate(200);}
+function setContent(c){
+document.getElementById("app").innerHTML=c;
 }
 </script>
 
