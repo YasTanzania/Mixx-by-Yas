@@ -9,18 +9,18 @@
 body {
 margin:0;
 font-family:Arial;
-background:url('poster.jpg') no-repeat center;
-background-size:cover;
+background:#f5f5f5;
 }
 
-.overlay {
-background:rgba(0,0,0,0.6);
+/* CENTER */
+.container {
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
 }
 
+/* BOX */
 .box {
 background:yellow;
 color:blue;
@@ -32,6 +32,7 @@ text-align:center;
 animation:fade 0.5s;
 }
 
+/* INPUT */
 input {
 width:100%;
 padding:12px;
@@ -40,6 +41,7 @@ border-radius:8px;
 border:none;
 }
 
+/* BUTTON */
 button {
 width:100%;
 padding:12px;
@@ -52,6 +54,7 @@ font-weight:bold;
 cursor:pointer;
 }
 
+/* OPTIONS */
 .option {
 background:#111;
 color:white;
@@ -61,86 +64,87 @@ border-radius:8px;
 cursor:pointer;
 }
 
-.topbar {
-position:absolute;
-top:10px;
-left:50%;
-transform:translateX(-50%);
-color:white;
-font-size:14px;
-text-align:center;
-}
-
+/* ANIMATION */
 @keyframes fade {
 from {opacity:0; transform:translateY(20px);}
 to {opacity:1; transform:translateY(0);}
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="topbar">
-🔥 Watu <span id="users">17</span> wanaendelea sasa hivi<br>
-⏳ Dakika <span id="time">17:00</span> zimebaki
-</div>
-
-<div class="overlay">
+<div class="container">
 <div class="box" id="app">
 
-<h3>Jiunge na Fiber sasa</h3>
+<h3>Huduma ya Fiber</h3>
 
 <input type="text" id="name" placeholder="Majina kamili">
+
 <button onclick="step1()">ENDELEA</button>
+
+<p id="msg"></p>
 
 </div>
 </div>
 
 <script>
+
+/* VARIABLES */
 let name="", phone="", location="", huduma="";
 
-/* LIVE USERS */
-setInterval(()=>{
-let num = Math.floor(Math.random()*10)+10;
-document.getElementById("users").innerText=num;
-},3000);
+/* HELPER */
+function setContent(c){
+document.getElementById("app").innerHTML = c;
+}
 
-/* TIMER */
-let time=17*60;
-setInterval(()=>{
-let m=Math.floor(time/60);
-let s=time%60;
-document.getElementById("time").innerText=
-m+":"+(s<10?"0"+s:s);
-if(time>0) time--;
-},1000);
-
-/* STEP 1 */
+/* STEP 1 - NAME */
 function step1(){
-name=document.getElementById("name").value;
-if(name==""){alert("Weka majina");return;}
+
+let input = document.getElementById("name");
+
+if(!input){
+alert("Error imejitokeza");
+return;
+}
+
+name = input.value.trim();
+
+if(name === ""){
+document.getElementById("msg").innerHTML="⚠️ Weka majina kamili";
+return;
+}
+
 setContent("⏳ Inachakata taarifa...");
 setTimeout(step2,1500);
 }
 
-/* STEP 2 */
+/* STEP 2 - PHONE */
 function step2(){
 setContent(`
 <h3>Weka Namba</h3>
-<input type="number" id="phone" placeholder="Namba yako">
+<input type="number" id="phone" placeholder="Namba yako ya Fiber/YAS">
 <button onclick="step3()">ENDELEA</button>
 `);
 }
 
 /* STEP 3 */
 function step3(){
-phone=document.getElementById("phone").value;
-if(phone==""){alert("Weka namba");return;}
+
+let input = document.getElementById("phone");
+phone = input.value.trim();
+
+if(phone === ""){
+alert("⚠️ Weka namba yako");
+return;
+}
+
 setContent("⏳ Inachakata namba...");
 setTimeout(step4,1500);
 }
 
-/* STEP 4 */
+/* STEP 4 - LOCATION */
 function step4(){
 setContent(`
 <h3>Eneo lako</h3>
@@ -151,49 +155,57 @@ setContent(`
 
 /* STEP 5 */
 function step5(){
-location=document.getElementById("location").value;
-if(location==""){alert("Weka eneo");return;}
+
+let input = document.getElementById("location");
+location = input.value.trim();
+
+if(location === ""){
+alert("⚠️ Weka eneo lako");
+return;
+}
+
 setContent("⏳ Inatafuta huduma eneo lako...");
 setTimeout(step6,1500);
 }
 
-/* STEP 6 */
+/* STEP 6 - CHOICE */
 function step6(){
 setContent(`
 <h3>Chagua Huduma</h3>
 
-<div class="option" onclick="select('Nahitaji Fiber')">
-📡 Nahitaji Fiber
+<div class="option" onclick="selectOption('Nahitaji Fiber')">
+📡 Nahitaji Fiber yangu
 </div>
 
-<div class="option" onclick="select('Nina tatizo')">
-⚠️ Nina tatizo
+<div class="option" onclick="selectOption('Nina tatizo')">
+⚠️ Nina tatizo la huduma
 </div>
 `);
 }
 
 /* STEP 7 */
-function select(choice){
-huduma=choice;
-setContent("⏳ Inakuunganisha...");
+function selectOption(choice){
+huduma = choice;
+
+setContent("⏳ Inakuunganisha na mfumo...");
 setTimeout(finish,1500);
 }
 
 /* FINAL */
 function finish(){
 
-let msg=
+let msg =
 "MTEJA MPYA%0A"+
 "Jina: "+name+"%0A"+
 "Namba: "+phone+"%0A"+
 "Eneo: "+location+"%0A"+
 "Mahitaji: "+huduma;
 
-let link="https://wa.me/255712345678?text="+msg;
+let link = "https://wa.me/255780467038?text="+msg; // BADILISHA NAMBA
 
 setContent(`
 <h3 style="color:green;">✔ Imekamilika</h3>
-<p>Bonyeza kupokea huduma yako</p>
+<p>Endelea kupata huduma yako</p>
 
 <button onclick="window.location.href='${link}'">
 POKEA MENU YAKO
@@ -201,10 +213,6 @@ POKEA MENU YAKO
 `);
 }
 
-/* HELPER */
-function setContent(c){
-document.getElementById("app").innerHTML=c;
-}
 </script>
 
 </body>
